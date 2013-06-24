@@ -1663,7 +1663,7 @@ static int synaptics_rmi4_f51_edge_swipe(struct synaptics_rmi4_data *rmi4_data,
 		return -ENODEV;
 
 	if (data->edge_swipe_dg >= 90 && data->edge_swipe_dg <= 180)
-#if defined(CONFIG_MACH_JACTIVE_EUR)
+#if defined(CONFIG_MACH_JACTIVE_EUR) || defined(CONFIG_MACH_JACTIVE_ATT)
 		f51->surface_data.angle = data->edge_swipe_dg - 90;
 #else
 		f51->surface_data.angle = data->edge_swipe_dg - 180;

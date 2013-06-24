@@ -36,6 +36,7 @@ static struct gpiomux_setting gpio_spi_config = {
 };
 
 
+
 #if defined(CONFIG_KS8851) || defined(CONFIG_KS8851_MODULE)
 static struct gpiomux_setting gpio_eth_config = {
 	.pull = GPIOMUX_PULL_NONE,

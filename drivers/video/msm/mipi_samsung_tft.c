@@ -291,7 +291,9 @@ static void execute_panel_init(struct msm_fb_data_type *mfd)
 
 static int mipi_samsung_disp_on_in_video_engine(struct platform_device *pdev)
 {
-	struct msm_fb_data_type *mfd;
+	struct msm_fb_data_type *mfd = NULL;
+	struct mipi_panel_info *mipi = NULL;
+	static int first_boot_on = 0;
 
 	printk(KERN_INFO "[lcd] mipi_samsung_disp_on_in_video_engine start\n" );
 

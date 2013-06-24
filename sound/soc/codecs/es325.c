@@ -2302,7 +2302,7 @@ LOOP:
 	rc = ES325_BUS_WRITE(es325, ES325_WRITE_VE_OFFSET,
 			     ES325_WRITE_VE_WIDTH, pwr_cmd, 4, 1);
 	if (rc < 0) {
-		if (-remain > 0) {
+		if (--remain > 0) {
 			pr_info("=[ES325]= wrapper %s sleep command failed remain count %d\n",
 				__func__, remain);
 			usleep_range(1000, 1100);
