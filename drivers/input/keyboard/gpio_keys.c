@@ -901,8 +901,10 @@ static int __devinit gpio_keys_probe(struct platform_device *pdev)
 	struct input_dev *input;
 	int i, error;
 	int wakeup = 0;
-	int ret=0;
+#ifdef CONFIG_SENSORS_HALL
+	int ret;
 	struct device *sec_key;
+#endif
 
 	if (!pdata) {
 		error = gpio_keys_get_devtree_pdata(dev, &alt_pdata);
@@ -992,8 +994,8 @@ static int __devinit gpio_keys_probe(struct platform_device *pdev)
 	}
 	input_sync(input);
 
-	sec_key = device_create(sec_class, NULL, 0, NULL, "sec_key");
 #ifdef CONFIG_SENSORS_HALL
+	sec_key = device_create(sec_class, NULL, 0, NULL, "sec_key");
 	if (IS_ERR(sec_key))
 		pr_err("Failed to create device(sec_key)!\n");
 
@@ -1002,7 +1004,7 @@ static int __devinit gpio_keys_probe(struct platform_device *pdev)
 		pr_err("Failed to create device file(%s)!, error: %d\n",
 			dev_attr_hall_detect.attr.name, ret);
 	}
-#endif
+
 	ret = device_create_file(sec_key, &dev_attr_sec_key_pressed);
 	if (ret) {
 		pr_err("Failed to create device file in sysfs entries(%s)!\n",
@@ -1014,6 +1016,7 @@ static int __devinit gpio_keys_probe(struct platform_device *pdev)
 			dev_attr_wakeup_keys.attr.name, ret);
 	}
 	dev_set_drvdata(sec_key, ddata);
+#endif
 	device_init_wakeup(&pdev->dev, 1);
 
 	return 0;

@@ -972,24 +972,23 @@ int msm_pm_wait_cpu_shutdown(unsigned int cpu)
 
 	if (!msm_pm_slp_sts)
 		return 0;
-
 	if (!msm_pm_slp_sts[cpu].base_addr)
 		return 0;
 
-    while (timeout--) {
+	while (timeout--) {
 		/*
 		 * Check for the SPM of the core being hotplugged to set
 		 * its sleep state.The SPM sleep state indicates that the
 		 * core has been power collapsed.
 		 */
-		int acc_sts = __raw_readl(msm_pm_slp_sts->base_addr
-				+ cpu * msm_pm_slp_sts->cpu_offset);
-		mb();
-		if (acc_sts & msm_pm_slp_sts->mask)
+		int acc_sts = __raw_readl(msm_pm_slp_sts[cpu].base_addr);
+
+		if (acc_sts & msm_pm_slp_sts[cpu].mask)
 			return 0;
 		udelay(100);
 	}
-pr_info("%s(): Timed out waiting for CPU %u SPM to enter sleep state",
+
+	pr_info("%s(): Timed out waiting for CPU %u SPM to enter sleep state",
 		__func__, cpu);
 	return -EBUSY;
 }
@@ -1352,7 +1351,6 @@ static int __init msm_pm_init(void)
 	hrtimer_init(&pm_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS);
 	msm_cpuidle_init();
 	platform_driver_register(&msm_pc_counter_driver);
-
 	rc = platform_driver_register(&msm_cpu_status_driver);
 
 	if (rc) {
@@ -1360,7 +1358,6 @@ static int __init msm_pm_init(void)
 				msm_cpu_status_driver.driver.name);
 		return rc;
 	}
-
 
 	return 0;
 }
