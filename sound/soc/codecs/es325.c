@@ -1732,7 +1732,7 @@ static void es325_switch_route(void)
 			es325->new_internal_route_config < 3 + NETWORK_OFFSET)) {
 			
 			es325->new_internal_route_config += NS_OFFSET;
-			pr_info("=[ES325]=%s() adjust 2mic_enable offset\n", __func__);
+			pr_info("=[ES325]=%s() adjust 2mic_enable offset, es325_2mic_enable=%d\n", __func__, es325_2mic_enable);
 		}
 	} else {
 		if ((es325->new_internal_route_config >= 1 + NS_OFFSET &&
@@ -1741,7 +1741,7 @@ static void es325_switch_route(void)
 			es325->new_internal_route_config < 3 + NETWORK_OFFSET + NS_OFFSET)) {
 			
 			es325->new_internal_route_config -= NS_OFFSET;
-			pr_info("=[ES325]=%s() adjust 2mic_enable offset\n", __func__);
+			pr_info("=[ES325]=%s() adjust 2mic_enable offset, es325_2mic_enable=%d\n", __func__, es325_2mic_enable);
 		}
 	}
 
