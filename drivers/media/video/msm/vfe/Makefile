@@ -1,10 +1,10 @@
 GCC_VERSION      := $(shell $(CONFIG_SHELL) $(PWD)/scripts/gcc-version.sh $(CROSS_COMPILE)gcc)
 ccflags-y += -Idrivers/media/video/msm
 ccflags-y += -Idrivers/media/video/msm/server
-ifeq ($(CONFIG_MACH_JACTIVE_EUR),y)
+ifdef CONFIG_MACH_JACTIVE_EUR
 ccflags-y += -Idrivers/video/msm
 endif
-ifeq ($(CONFIG_MACH_JACTIVE_ATT),y)
+ifdef CONFIG_MACH_JACTIVE_ATT
 ccflags-y += -Idrivers/video/msm
 endif
 ifeq ($(GCC_VERSION),0404)
