@@ -832,6 +832,7 @@ static void gpio_remove_key(struct gpio_button_data *bdata)
 		gpio_free(bdata->button->gpio);
 }
 
+#ifdef CONFIG_SENSORS_HALL
 static ssize_t  sysfs_key_onoff_show(struct device *dev,
 	struct device_attribute *attr, char *buf)
 {
@@ -850,7 +851,9 @@ static ssize_t  sysfs_key_onoff_show(struct device *dev,
 	return snprintf(buf, 5, "%d\n", state);
 }
 
+
 static DEVICE_ATTR(sec_key_pressed, 0664 , sysfs_key_onoff_show, NULL);
+
 
 /* the volume keys can be the wakeup keys in special case */
 static ssize_t wakeup_enable(struct device *dev,
@@ -889,7 +892,7 @@ out:
 }
 
 static DEVICE_ATTR(wakeup_keys, 0664, NULL, wakeup_enable);
-
+#endif
 static int __devinit gpio_keys_probe(struct platform_device *pdev)
 {
 	const struct gpio_keys_platform_data *pdata = pdev->dev.platform_data;
