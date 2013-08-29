@@ -12,14 +12,22 @@
 
 #include <linux/module.h>
 #include "msm_actuator.h"
+#if defined(CONFIG_MACH_JACTIVE_ATT) || defined(CONFIG_MACH_JACTIVE_EUR)
+#include "hvca_actuator.h"
+#endif
 
 static struct msm_actuator_ctrl_t msm_actuator_t;
 static struct msm_actuator msm_vcm_actuator_table;
 static struct msm_actuator msm_piezo_actuator_table;
-
+#if defined(CONFIG_MACH_JACTIVE_ATT) || defined(CONFIG_MACH_JACTIVE_EUR)
+static struct msm_actuator hvca_actuator_table;
+#endif
 static struct msm_actuator *actuators[] = {
 	&msm_vcm_actuator_table,
 	&msm_piezo_actuator_table,
+#if defined(CONFIG_MACH_JACTIVE_ATT) || defined(CONFIG_MACH_JACTIVE_EUR)
+	&hvca_actuator_table,
+#endif
 };
 
 static int32_t msm_actuator_piezo_set_default_focus(
@@ -687,6 +695,20 @@ static struct msm_actuator msm_piezo_actuator_table = {
 		.actuator_parse_i2c_params = msm_actuator_parse_i2c_params,
 	},
 };
+
+#if defined(CONFIG_MACH_JACTIVE_ATT) || defined(CONFIG_MACH_JACTIVE_EUR)
+static struct msm_actuator hvca_actuator_table = {
+  .act_type = ACTUATOR_HVCA,
+  .func_tbl = {
+    .actuator_init_step_table = hvca_actuator_init_step_table,
+    .actuator_move_focus = hvca_actuator_move_focus,
+    .actuator_write_focus = NULL,
+    .actuator_set_default_focus = hvca_actuator_set_default_focus,
+    .actuator_init_focus = hvca_actuator_init_focus,
+    .actuator_parse_i2c_params = NULL,
+  },
+};
+#endif
 
 subsys_initcall(msm_actuator_i2c_add_driver);
 MODULE_DESCRIPTION("MSM ACTUATOR");
