@@ -8,12 +8,18 @@ obj-$(CONFIG_MSM_CAMERA_SENSOR) += msm_sensor_common.o msm_sensor.o
 #obj-$(CONFIG_OV8825) += ov8825_v4l2.o
 #obj-$(CONFIG_IMX074) += imx074_v4l2.o
 #obj-$(CONFIG_S5K3L1YX) += s5k3l1yx.o
-#obj-$(CONFIG_OV2720) += ov2720.o
+#obj-$(CONFIG_OV2720) += ov272	0.o
 #obj-$(CONFIG_MT9M114) += mt9m114_v4l2.o
 #obj-$(CONFIG_S5K4E1) += s5k4e1_v4l2.o
 #obj-$(CONFIG_MT9E013) += mt9e013_v4l2.o
 #obj-$(CONFIG_WEBCAM_OV9726) += ov9726_v4l2.o
 #obj-$(CONFIG_OV7692) += ov7692_v4l2.o
 #obj-$(CONFIG_VX6953) += vx6953.o
-obj-$(CONFIG_JC) += jc_v4l2.o jc_spi.o
-obj-$(CONFIG_S5K6B2YX) += s5k6b2yx.o
+
+ifeq ($(CONFIG_MACH_JACTIVE_EUR),y)
+  obj-$(CONFIG_S5K3H5XA) += s5k3h5xa.o
+else ifeq ($(CONFIG_MACH_JACTIVE_ATT),y)
+  obj-$(CONFIG_S5K3H5XA) += s5k3h5xa.o
+else
+  obj-$(CONFIG_JC) += jc_v4l2.o jc_spi.o
+endif
