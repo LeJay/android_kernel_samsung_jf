@@ -32,7 +32,7 @@
 
 #define AUTO_BRIGHTNESS_CABC_FUNCTION
 
-//#include "smart_dimming.h"
+#include <linux/earlysuspend.h>
 
 enum mipi_samsung_cmd_list {
 
